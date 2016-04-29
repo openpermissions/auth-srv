@@ -1,0 +1,12 @@
+{
+  "translations": [{
+    "search": "\/apiary\/api.md",
+    "replace": "\/..\/api\/html\/api.html"
+  }, {
+    "search": "(https:\/\/github.com\/openpermissions\/support-docs\/blob\/)(.*?\/)(.*?\/)(.*?\/)(.*)(\\.md)(\")",
+    "replace": "../../../../../documents/support/\\5.html\\7"
+  }, {
+    "search": "(https:\/\/github.com\/openpermissions\/)(.*?)(-srv\/blob\/)(.*?\/)(.*?\/)(markdown\/)(.*)(\\.md)(\")",
+    "replace": "../../../services/\\2/docs/service/html/\\7.html\\9"
+  }]
+}

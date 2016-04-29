@@ -1,0 +1,14 @@
+click==3.3
+cryptography==1.1.1
+enum34==1.0.4
+git+https://github.com/openpermissions/perch.git@0.14.0
+opp-chub==1.0.5
+opp-koi==1.0.8
+passlib==1.6.2
+PyJWT==1.4.0
+pyOpenSSL==0.14
+python-dateutil==2.5.2
+requests==2.4.3
+tornado-couchdb==0.2.3
+tornado==4.3
+voluptuous==0.8.9
