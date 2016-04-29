@@ -1,7 +1,7 @@
 The Open Permissions Platform Authentication Service
 ====================================================
 
-This repository contains an Open Permissions Platform Coalition Authentication application which take care
+This repository contains an Open Permissions Platform Authentication application which take care
 of service use authentication.
 
 Running locally
