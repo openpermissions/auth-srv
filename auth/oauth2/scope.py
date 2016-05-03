@@ -207,6 +207,10 @@ class Scope(object):
                 raise InvalidScope('Scope contains an unknown resource ID')
 
             resource = RESOURCE_TYPES[doc['value']['type']](**doc['value'])
+            try:
+                yield resource.get_parent()
+            except couch.NotFound:
+                raise InvalidScope('Invalid resource - missing parent')
             func(resource, resources[resource_id])
 
     @coroutine

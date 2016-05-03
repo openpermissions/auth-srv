@@ -10,12 +10,10 @@
 """
 Implementations for the client credentials & JWT-bearer authorization grants
 """
-import logging
-
 import couch
 from tornado.gen import coroutine, Return
 from tornado.options import options
-from perch import exceptions, Repository, Service
+from perch import Repository, Service
 
 from .scope import Scope
 from .token import generate_token, decode_token
@@ -230,7 +228,7 @@ class ClientCredentials(BaseGrant):
         """Verify a token has access to a resource"""
         decoded = decode_token(token)
         scope = decoded['scope']
-        client = Service(**decoded['client'])
+        client = yield Service.get(decoded['client']['id'])
 
         self.verify_scope(scope)
         yield [self.verify_access_service(client),
@@ -290,7 +288,7 @@ class AuthorizeDelegate(BaseGrant):
 
         # Assuming delegation always requires write access
         # should change it to a param
-        client = Service(**self.assertion['client'])
+        client = yield Service.get(self.assertion['client']['id'])
         has_access = client.authorized('w', self.request.client)
 
         if not has_access:
@@ -316,15 +314,10 @@ class AuthorizeDelegate(BaseGrant):
 
         try:
             delegate = yield Service.get(decoded['sub'])
-        except exceptions.HTTPError as exc:
-            if exc.status_code == 404:
-                raise Unauthorized("Unknown delegate '{}'"
-                                   .format(decoded['sub']))
-            else:
-                logging.exception('Unexpected database error')
-                raise exceptions.HTTPError(500, 'Internal Server Error')
+        except couch.NotFound:
+            raise Unauthorized("Unknown delegate '{}'".format(decoded['sub']))
 
-        client = Service(**decoded['client'])
+        client = yield Service.get(decoded['client']['id'])
 
         yield [self.verify_access_service(delegate),
                self.verify_access_service(client),
