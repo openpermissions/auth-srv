@@ -46,6 +46,7 @@ class TestScope(AsyncTestCase):
             'state': perch.State.approved,
             'type': 'repository',
             'id': 'repo2',
+            'permissions': []
         }, {
             'parent': ORGANISATION,
             'state': perch.State.approved,
@@ -74,6 +75,7 @@ class TestScope(AsyncTestCase):
             'type': 'service',
             'id': 'service2',
             'location': 'http://service2test',
+            'permissions': []
         }, {
             'parent': ORGANISATION,
             'state': perch.State.approved,
