@@ -172,6 +172,6 @@ dev_register:
 dev_setup: dev_install dev_register
 
 test_register:
-	python auth register_service copyright.hub@example.com password hogwarts
+	python auth register_service opp@example.com password toppco
 
 test_setup: dev_install test_register

@@ -24,7 +24,7 @@ This How-to describes how to authenticate with Open Permissions
 Platform services.
 
 For issues and support, contact
-[support-copyrighthub@digicatapult.org.uk](mailto:support-copyrighthub@digicatapult.org.uk)
+[support@openpermissions.org](mailto:support@openpermissions.org)
 by email.
 
 ### See also
@@ -165,7 +165,7 @@ for example:
 
 ```
 curl https://on-stage.copyrighthub.org/v1/onboarding
-{"status": 200, "data": {"service_name": "Open Permissions Platform Onboarding Service", "hub_id": "hub1", "version": "1.0.0", "default_resolver_id": "copyrighthub.org", "service_id": "5e7c2be8f9f8dc8456f61db81e004d32"}}
+{"status": 200, "data": {"service_name": "Open Permissions Platform Onboarding Service", "hub_id": "hub1", "version": "1.0.0", "default_resolver_id": "openpermissions.org", "service_id": "5e7c2be8f9f8dc8456f61db81e004d32"}}
 ```
 
 Token scopes accept either the service UUID or URL, for example the
