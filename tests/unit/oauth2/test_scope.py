@@ -18,15 +18,22 @@ from auth import oauth2
 from auth.oauth2.scope import Scope, READ, WRITE, DELEGATE
 
 
+ORGANISATION = perch.Organisation(id='org1', state=perch.State.approved)
+
+
 class TestScope(AsyncTestCase):
     def setUp(self):
         super(TestScope, self).setUp()
         self.client = perch.Service(
+            parent=ORGANISATION,
+            organisation_id=ORGANISATION.id,
             id='client id',
-            organisation_id='org1',
-            service_type='external'
+            service_type='external',
+            state=perch.State.approved
         )
         self.repositories = [{
+            'parent': ORGANISATION,
+            'state': perch.State.approved,
             'type': 'repository',
             'id': 'repo1',
             'permissions': [
@@ -35,9 +42,14 @@ class TestScope(AsyncTestCase):
                  'permission': 'rw'}
             ]
         }, {
+            'parent': ORGANISATION,
+            'state': perch.State.approved,
             'type': 'repository',
             'id': 'repo2',
+            'permissions': []
         }, {
+            'parent': ORGANISATION,
+            'state': perch.State.approved,
             'type': 'repository',
             'id': 'repo3',
             'permissions': [
@@ -47,6 +59,8 @@ class TestScope(AsyncTestCase):
             ]
         }]
         self.services = [{
+            'parent': ORGANISATION,
+            'state': perch.State.approved,
             'type': 'service',
             'id': 'service1',
             'location': 'http://service.test',
@@ -56,10 +70,15 @@ class TestScope(AsyncTestCase):
                  'permission': 'rw'}
             ]
         }, {
+            'parent': ORGANISATION,
+            'state': perch.State.approved,
             'type': 'service',
             'id': 'service2',
             'location': 'http://service2test',
+            'permissions': []
         }, {
+            'parent': ORGANISATION,
+            'state': perch.State.approved,
             'type': 'service',
             'id': 'service3',
             'location': 'http://service3.test',

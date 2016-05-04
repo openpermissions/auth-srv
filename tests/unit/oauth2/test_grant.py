@@ -20,14 +20,20 @@ from auth.oauth2 import grants, Scope
 from auth.oauth2.token import decode_token, generate_token
 
 
+ORGANISATION = perch.Organisation(id='org1', state=perch.State.approved)
+
+
 class FakeRequest(object):
     def __init__(self, client_id='client_id', client=None, scope='read',
                  grant_type='fake grant', **kwargs):
         if client is None:
             self.client_id = client_id
             self.client = perch.Service(
+                parent=ORGANISATION,
+                organisation_id=ORGANISATION.id,
                 id=client_id,
-                location='http://test.client'
+                location='http://test.client',
+                state=perch.State.approved
             )
         else:
             self.client_id = client.id
@@ -181,16 +187,20 @@ class TestBaseGrant(AsyncTestCase):
 
         with patch.object(grants.Repository, 'get') as repo_get:
             client = perch.Service(
+                parent=ORGANISATION,
                 id='something',
-                organisation_id='org1',
-                service_type='external'
+                organisation_id=ORGANISATION.id,
+                service_type='external',
+                state=perch.State.approved,
             )
             repo = perch.Repository(
+                parent=ORGANISATION,
+                organisation_id=ORGANISATION.id,
                 service_id=self.request.client_id,
-                organisation_id=client.organisation_id,
+                state=perch.State.approved,
                 permissions=[
                     {'type': 'organisation_id',
-                     'value': client.organisation_id,
+                     'value': ORGANISATION.id,
                      'permission': 'rw'
                      }
                 ]
@@ -218,16 +228,20 @@ class TestBaseGrant(AsyncTestCase):
         self.request.body_arguments['resource_id'] = ['1234']
         with patch.object(grants.Repository, 'get') as repo_get:
             client = perch.Service(
+                parent=ORGANISATION,
                 id='something',
-                organisation_id='org1',
-                service_type='external'
+                organisation_id=ORGANISATION.id,
+                service_type='external',
+                state=perch.State.approved,
             )
             repo = perch.Repository(
+                parent=ORGANISATION,
+                organisation_id=ORGANISATION.id,
                 service_id='something else',
-                organisation_id=client.organisation_id,
+                state=perch.State.approved,
                 permissions=[
                     {'type': 'organisation_id',
-                     'value': client.organisation_id,
+                     'value': ORGANISATION.id,
                      'permission': 'rw'
                      }
                 ]
@@ -244,13 +258,17 @@ class TestBaseGrant(AsyncTestCase):
         self.request.body_arguments['resource_id'] = ['1234']
         with patch.object(grants.Repository, 'get') as repo_get:
             client = perch.Service(
+                parent=ORGANISATION,
                 id='something',
-                organisation_id='org1',
-                service_type='external'
+                organisation_id=ORGANISATION.id,
+                service_type='external',
+                state=perch.State.approved
             )
             repo = perch.Repository(
+                parent=ORGANISATION,
                 service_id=self.request.client.id,
-                organisation_id=client.organisation_id,
+                organisation_id=ORGANISATION.id,
+                state=perch.State.approved,
                 permissions=[
                     {'type': 'organisation_id',
                      'value': client.organisation_id,
@@ -269,12 +287,16 @@ class TestBaseGrant(AsyncTestCase):
         self.request.body_arguments['requested_access'] = ['r']
         with patch.object(grants.Service, 'get') as service_get:
             client = perch.Service(
+                parent=ORGANISATION,
                 id='something',
-                organisation_id='org1',
-                service_type='external'
+                organisation_id=ORGANISATION.id,
+                service_type='external',
+                state=perch.State.approved
             )
             service = perch.Repository(
-                organisation_id=client.organisation_id,
+                parent=ORGANISATION,
+                organisation_id=ORGANISATION.id,
+                state=perch.State.approved,
                 permissions=[
                     {'type': 'organisation_id',
                      'value': client.organisation_id,
@@ -292,12 +314,14 @@ class TestBaseGrant(AsyncTestCase):
         self.request.body_arguments['requested_access'] = ['r']
         with patch.object(grants.Service, 'get') as service_get:
             client = perch.Service(
+                parent=ORGANISATION,
                 id='something',
-                organisation_id='org1',
+                organisation_id=ORGANISATION.id,
                 service_type='external'
             )
             service = perch.Repository(
-                organisation_id=client.organisation_id,
+                parent=ORGANISATION,
+                organisation_id=ORGANISATION.id,
                 permissions=[
                     {'type': 'organisation_id',
                      'value': client.organisation_id,
@@ -363,7 +387,9 @@ class TestClientCredentialsGrant(AsyncTestCase):
             token=[token])
 
         grant = grants.ClientCredentials(request)
-        yield grant.verify_access(token)
+        with patch.object(grants.Service, 'get') as service_get:
+            service_get.return_value = make_future(self.client)
+            yield grant.verify_access(token)
 
         assert grant.verify_access_service.call_args[0][0].id == self.client.id
         assert grant.verify_access_hosted_resource.call_args[0][0].id == self.client.id
@@ -376,19 +402,22 @@ class TestAuthorizeDelegateGrant(AsyncTestCase):
         self.scope = 'write[1234]'
         self.client = perch.Service(
             id='client_id',
-            organisation_id='an organisation id',
+            parent=ORGANISATION,
+            organisation_id=ORGANISATION.id,
+            state=perch.State.approved,
             service_type='external'
         )
         self.delegate = perch.Service(
             id='delegate_client_id',
-            organisation_id='an organisation id',
+            parent=ORGANISATION,
+            organisation_id=ORGANISATION.id,
+            state=perch.State.approved,
             service_type='onboarding',
             location='http://onboarding.test',
-            state='approved',
             permissions=[
                 {
                     'type': 'organisation_id',
-                    'value': 'an organisation id',
+                    'value': ORGANISATION.id,
                     'permission': 'rw'
                 }
             ]
@@ -409,7 +438,11 @@ class TestAuthorizeDelegateGrant(AsyncTestCase):
     def test_generate_token(self):
         grant = grants.AuthorizeDelegate(self.request)
 
-        token, expiry = yield grant.generate_token()
+        with patch.object(grants.Service, 'get') as get_srv:
+            get_srv.return_value = make_future(self.client)
+
+            token, expiry = yield grant.generate_token()
+
         decoded = decode_token(token)
 
         assert decoded['delegate'] is True
@@ -422,8 +455,11 @@ class TestAuthorizeDelegateGrant(AsyncTestCase):
         self.delegate.permissions = []
         grant = grants.AuthorizeDelegate(self.request)
 
-        with pytest.raises(grants.Unauthorized):
-            yield grant.generate_token()
+        with patch.object(grants.Service, 'get') as get_srv:
+            get_srv.return_value = make_future(self.client)
+
+            with pytest.raises(grants.Unauthorized):
+                yield grant.generate_token()
 
     @gen_test
     def test_missing_assertion(self):
@@ -469,9 +505,11 @@ class TestAuthorizeDelegateGrant(AsyncTestCase):
             scope=self.scope,
             assertion=[client_token])
 
-        grant = grants.AuthorizeDelegate(request)
+        with patch.object(grants.Service, 'get') as get_srv:
+            get_srv.return_value = make_future(self.client)
+            grant = grants.AuthorizeDelegate(request)
 
-        yield grant.generate_token()
+            yield grant.generate_token()
 
     @gen_test
     def test_invalid_url_scope(self):
@@ -489,8 +527,12 @@ class TestAuthorizeDelegateGrant(AsyncTestCase):
 
         grant = grants.AuthorizeDelegate(request)
 
-        with pytest.raises(grants.Unauthorized):
-            yield grant.generate_token()
+        with patch.object(grants.Service, 'get') as get_srv:
+            get_srv.return_value = make_future(self.client)
+            grant = grants.AuthorizeDelegate(request)
+
+            with pytest.raises(grants.Unauthorized):
+                yield grant.generate_token()
 
     @patch.object(grants.AuthorizeDelegate, 'verify_access_service',
                   return_value=make_future(True))
@@ -515,8 +557,13 @@ class TestAuthorizeDelegateGrant(AsyncTestCase):
             requested_access=['w'],
             token=[token])
 
-        with patch.object(grants.Service, 'get') as get_srv:
-            get_srv.return_value = make_future(self.delegate)
+        def get_service(_, service_id, *args, **kwargs):
+            if service_id == self.delegate.id:
+                return make_future(self.delegate)
+            else:
+                return make_future(self.client)
+
+        with patch.object(grants.Service, 'get', classmethod(get_service)):
             grant = grants.AuthorizeDelegate(request)
             yield grant.verify_access(token)
 
