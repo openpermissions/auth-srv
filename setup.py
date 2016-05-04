@@ -7,7 +7,7 @@ setup(
     version=auth.__version__,
     description='Open Permissions Platform Auth Service',
     author='CDE Catapult',
-    author_email='support-copyrighthub@cde.catapult.org.uk',
+    author_email='support@openpermissions.org',
     url='https://github.com/openpermissions/auth-srv',
     packages=find_packages(exclude=['test']),
     entry_points={
