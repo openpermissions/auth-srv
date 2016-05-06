@@ -92,7 +92,7 @@ do not require authentication
   minutes, sufficient to support bulk actions and normal latencies in
   the system. However, it is recommended that you obtain a new token
   for each API call you make to avoid problems with a token expiring
-  before a call completes
+  before a call completes.
 
 ## Usage
 
@@ -231,7 +231,7 @@ curl --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbG
 >Always use staging service endpoints for test and development.
 
 To onboard to an OPP repository, the calling client must provide in
-the API call a token that delegates `write` permission for the client
+the API call a token that delegates a `write` permission for the client
 repository to the Repository service.
 
 For example, where `5e7c2be8f9f8dc8456f61db81e01523e` is the UUID of a
