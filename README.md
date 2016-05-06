@@ -1,8 +1,7 @@
 The Open Permissions Platform Authentication Service
 ====================================================
 
-This repository contains an Open Permissions Platform Authentication application which take care
-of service use authentication.
+This repository contains an Open Permissions Platform Authentication application which is responsible for authenticating client access.
 
 Running locally
 ===============
@@ -34,7 +33,7 @@ To have a "clean" target from build artifacts:
 make clean
 ```
 
-To install requirements. By default prod requirement is used:
+To install requirements. By default, prod requirement is used:
 
 ```
 make requirements [REQUIREMENT=test|dev|prod]
