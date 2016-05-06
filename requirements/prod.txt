@@ -11,7 +11,7 @@ enum34==1.0.4
 idna==2.1
 ipaddress==1.0.16
 opp-chub==1.0.5
-git+https://github.com/openpermissions/koi.git@ssl_options
+opp-koi==1.0.9
 git+https://github.com/openpermissions/perch.git@0.15.3
 passlib==1.6.2
 pyasn1==0.1.9
