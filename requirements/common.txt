@@ -3,7 +3,7 @@ cryptography==1.1.1
 enum34==1.0.4
 git+https://github.com/openpermissions/perch.git@0.15.3
 opp-chub==1.0.5
-opp-koi==1.0.8
+opp-koi==1.0.9
 passlib==1.6.2
 PyJWT==1.4.0
 pyOpenSSL==0.14
