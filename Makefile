@@ -159,7 +159,6 @@ egg_locks:
 			pip freeze >> $$req_file ; \
 			deactivate ; \
 			rm -rf $$venv_path ; \
-			sed -i '' -e 's|file-translate==\(.*\)|-e git://github.com/catapultbamboo/file_translate.git@\1#egg=file_translate|g' $$req_file ; \
 		fi; \
 	done
 
