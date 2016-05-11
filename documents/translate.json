@@ -7,6 +7,6 @@
     "replace": "../../../../../documents/support/\\5.html\\7"
   }, {
     "search": "(https:\/\/github.com\/openpermissions\/)(.*?)(-srv\/blob\/)(.*?\/)(.*?\/)(markdown\/)(.*)(\\.md)(\")",
-    "replace": "../../../services/\\2/docs/service/html/\\7.html\\9"
+    "replace": "../../../../../services/\\2/docs/service/html/\\7.html\\9"
   }]
 }
