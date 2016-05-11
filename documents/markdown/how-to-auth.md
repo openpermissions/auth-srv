@@ -15,8 +15,8 @@
   + [Token scope](#token-scope)
   + [Service and resource IDs](#service-and-resource-ids)
 + [Token request examples](#token-request-examples)
-  + [`read` token request and usage](#read-token-request)
-  + [Delegated `write` token request and usage](#delegated-write-token-request)
+  + [`read` token request and usage](#read-token-request-and-usage)
+  + [Delegated `write` token request and usage](#delegated-write-token-request-and-usage)
 
 ## About this document
 
@@ -259,3 +259,6 @@ that can be used to onboard assets to the specified repository.
 
 For an onboading example in Python, including a token request with
 delegated `write` scope, which is then used to onboard an asset, see [How to use the Onboarding Service](https://github.com/openpermissions/onboarding-srv/blob/master/documents/markdown/how-to-onboard.md).
+
+<!-- Copyright Notice -->
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
