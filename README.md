@@ -1,10 +1,19 @@
-The Open Permissions Platform Authentication Service
-====================================================
+The Open Permissions Platform Auth Service
+==========================================
 
-This repository contains an Open Permissions Platform Authentication application which is responsible for authenticating client access.
+Useful Links
+============
+* [Open Permissions Platform](http://openpermissions.org)
+* [Low level Design](https://github.com/openpermissions/auth-srv/blob/master/documents/markdown/low-level-design.md)
+* [API Documentation](https://github.com/openpermissions/auth-srv/blob/master/documents/apiary/api.md)
+* [How to authenticate with Open Permissions Platform services](https://github.com/openpermissions/auth-srv/blob/master/documents/markdown/how-to-auth.md)
+
+Service Overview
+================
+This repository contains an Open Permissions Platform Auth application which is responsible for authenticating client access.
 
 Running locally
-===============
+---------------
 To run the service locally:
 
 ```
@@ -26,7 +35,7 @@ python auth/ -t [--test]
 ```
 
 Running tests and generating code coverage
-==========================================
+------------------------------------------
 To have a "clean" target from build artifacts:
 
 ```
