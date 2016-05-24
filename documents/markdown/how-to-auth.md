@@ -43,7 +43,7 @@ authentication flow follows OAuth 2.0.
 Typically the steps are:
 
 1. Request an OAuth access token with appropriate
-   [scope](#token-scope) from the OPP Authentication Service,
+   [scope](#token-scope) from the OPP Auth Service,
    supplying [client credentials](#client-credentials)
 2. Supply the token in the API request to the required OPP service
 
@@ -52,12 +52,12 @@ Typically the steps are:
 >or developing application clients that use the Onboarding Service
 >need to use the authentication flow.
 
-In addition to client credentials, the Authentication Service also
+In addition to client credentials, the Auth Service also
 supports the **JWT Bearer** token flow, which is used internally to
 exchange a token for delegated access.
 
 For full API details, see the
-[Authentication Service API reference](../apiary/api.md).
+[Auth Service API reference](../apiary/api.md).
 
 ### Services summary
 
@@ -84,11 +84,11 @@ do not require authentication
 ## API status in the current release
 
 + OAuth 2.0 Client Credentials and JWT Bearer token flows implemented
-  by the Authentication Service
+  by the Auth Service
 
 ### Limitations
 
-+ The Authentication Service expires tokens after a fixed number of
++ The Auth Service expires tokens after a fixed number of
   minutes, sufficient to support bulk actions and normal latencies in
   the system. However, it is recommended that you obtain a new token
   for each API call you make to avoid problems with a token expiring
@@ -100,9 +100,9 @@ Application clients and external services must supply an OAuth access
 token as `Bearer` in calls to OPP endpoints that require
 authentication.
 
-Tokens are supplied by the Authentication Service.
+Tokens are supplied by the Auth Service.
 
-The Authentication Service uses Basic Authentication with client
+The Auth Service uses Basic Authentication with client
 credentials to authorise token requests.
 
 ### Client credentials
@@ -178,7 +178,7 @@ https://on-stage.copyrighthub.org
 ## Token request examples
 
 The following examples show how to request tokens from the OPP
-Authentication staging service `https://auth-stage.copyrighthub.org`
+Auth staging service `https://auth-stage.copyrighthub.org`
 where:
 
 + `<client>` is the service ID of the calling application client or
