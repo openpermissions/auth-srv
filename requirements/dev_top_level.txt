@@ -3,7 +3,7 @@
 cloverpy==0.1.1
 file_translate==0.0.3
 Flask==0.10.1
-grip==3.2.0
+grip==4.3.2
 mock==1.3.0
 pylint==1.3.0
 pytest==2.5.2
