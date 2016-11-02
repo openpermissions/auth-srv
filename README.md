@@ -4,9 +4,9 @@ The Open Permissions Platform Auth Service
 Useful Links
 ============
 * [Open Permissions Platform](http://openpermissions.org)
-* [Low level Design](https://github.com/openpermissions/auth-srv/blob/master/documents/markdown/low-level-design.md)
-* [API Documentation](https://github.com/openpermissions/auth-srv/blob/master/documents/apiary/api.md)
-* [How to authenticate with Open Permissions Platform services](https://github.com/openpermissions/auth-srv/blob/master/documents/markdown/how-to-auth.md)
+* [Low level Design](./documents/markdown/low-level-design.md)
+* [API Documentation](./documents/apiary/api.md)
+* [How to authenticate with Open Permissions Platform services](./documents/markdown/how-to-auth.md)
 
 Service Overview
 ================
