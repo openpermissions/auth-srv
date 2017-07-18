@@ -5,7 +5,7 @@ astroid==1.4.8
 backports-abc==0.4
 backports.ssl-match-hostname==3.5.0.1
 certifi==2016.9.26
-cffi==1.8.3
+cffi==1.10.0
 click==3.3
 cloverpy==0.1.1
 cov-core==1.15.0
